@@ -1,3 +1,5 @@
+const https = require("https");
+
 exports.findServer=function(serverArray){
 
     //search through an array of servers for the highest priority server
@@ -14,23 +16,18 @@ exports.findServer=function(serverArray){
         // or
         //reject("No server found"); // rejected
 
-        const xhr = new XMLHttpRequest();
-        xhr.open("GET", url);
-        xhr.onload = () => resolve(xhr.responseText);
-        xhr.onerror = () => reject(xhr.statusText);
-        xhr.send();
-
-    });
+        https.get(url, res => {
+            res.setEncoding("utf8");
+            let body = "";
+            res.on("data", data => {
+              body += data;
+            });
+            res.on("end", () => {
+                body = JSON.parse(body);
+                resolve(body);
+            });
+            res.on("error",()=>{
+                reject("No server found");
+            })
+     });
 }
-
-
-
-function myAsyncFunction(url) {
-    return new Promise((resolve, reject) => {
-      const xhr = new XMLHttpRequest();
-      xhr.open("GET", url);
-      xhr.onload = () => resolve(xhr.responseText);
-      xhr.onerror = () => reject(xhr.statusText);
-      xhr.send();
-    });
-  }
