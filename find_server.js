@@ -1,4 +1,5 @@
 const https = require("https");
+const request = require("request")
 
 exports.findServer=function(serverArray){
 
@@ -7,7 +8,7 @@ exports.findServer=function(serverArray){
     // return a promise that either responds with the server information
     // or rejects with an error message
     
-    var url = serverArray[0].url;
+    const url = serverArray[0].url;
     
     return new Promise((resolve, reject) => {
         // search for servers, the result of which will either:
@@ -16,20 +17,16 @@ exports.findServer=function(serverArray){
         // or
         //reject("No server found"); // rejected
 
-        https.get(url, res => {
-            res.setEncoding("utf8");
-            let body = "";
-            res.on("data", data => {
-              body += data;
-            });     //end of get request
-            res.on("end", () => {
-                body = JSON.parse(body);
-                resolve(body);
-            });     //end of response
-            res.on("error",()=>{
-                reject("No server found");
-            });     //end of error
-     });
+        request.get(url, (error, response, body) => {
+            let json = JSON.parse(body);
+            if(error){
+                return reject(error);
+            }
+            return resolve(body);
+          });       //end of request
+
 });         //end of promise construction
 
 }
+
+
