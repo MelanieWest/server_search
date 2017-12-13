@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/MelanieWest/server_search/issues"
   },
-  "homepage": "https://github.com/MelanieWest/server_search#readme"
+  "homepage": "https://github.com/MelanieWest/server_search#readme",
+  "dependencies": {
+    "request": "^2.83.0"
+  }
 }
