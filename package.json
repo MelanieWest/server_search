@@ -1,6 +1,6 @@
 {
   "name": "find_server",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "search for server and return a promise",
   "main": "find_server.js",
   "scripts": {
