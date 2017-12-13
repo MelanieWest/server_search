@@ -21,13 +21,15 @@ exports.findServer=function(serverArray){
             let body = "";
             res.on("data", data => {
               body += data;
-            });
+            });     //end of get request
             res.on("end", () => {
                 body = JSON.parse(body);
                 resolve(body);
-            });
+            });     //end of response
             res.on("error",()=>{
                 reject("No server found");
-            })
+            });     //end of error
      });
+});         //end of promise construction
+
 }
